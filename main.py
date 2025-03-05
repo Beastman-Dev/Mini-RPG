@@ -15,6 +15,19 @@ class Room:
         self.enemies = enemies
         self.treasure = treasure
 
+    def spawn_enemies(self):
+        for enemy in self.enemies:
+            pass
+
+    def search_room(self):
+        print(self.search_results)
+
+    def exit_room(self):
+        pass
+
+    def room_options(self):
+        pass
+
 class Creature:
     def __init__(self, name, health, attack):
         self.name = name
@@ -95,3 +108,39 @@ class Potion(Treasure):
         else:
             print("Invalid potion type!")
 
+class Game():
+    def __init__(self, dungeon):
+        self.dungeon = dungeon
+
+    def start(self):
+        print(f"Welcome to {self.dungeon.name}!")
+        print("You are standing in the Entrance Hall.")
+        print("To the North is the dungeon entrance.")
+        print("There are doors to the East and West.")
+        print("The hall is otherwise empty.")
+        print("You hear gutteral voices coming from the West and faint snoring from the East.")
+        print("What do you do?")
+        print("1. Go North")
+        print("2. Go East")
+        print("3. Go West")
+        print("4. Quit")
+        choice = input("> ")
+        if choice == "1":
+            print("You go North.")
+        elif choice == "2":
+            print("You go East.")
+        elif choice == "3":
+            print("You go West.")
+        elif choice == "4":
+            print("Goodbye!")
+            exit()
+        else:
+            print("Invalid choice.")
+            self.start()
+
+    def enter_room(self, room):
+        print(room.description)
+        if room.enemies:
+            print("Enemies appear!")
+            room.spawn_enemies()
+        
