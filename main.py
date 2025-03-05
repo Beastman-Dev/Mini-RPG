@@ -132,8 +132,10 @@ class Game():
         print(current_room.description)
         if current_room.enemies:
             print("You found enemies!")
+            enemy_number = 1
             for enemy in current_room.spawn_enemies():
-                print(f"Instance ID: {enemy.id}, Name: {enemy.name}, Health: {enemy.health}, Attack: {enemy.attack}")
+                print(f"{enemy_number}. {enemy.name}")
+                enemy_number += 1
         else:
             options = current_room.room_options()
             for option in options:
