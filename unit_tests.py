@@ -14,15 +14,23 @@ def create_dungeon_unit_tests():
 
 def create_room_unit_tests():
     try:
-        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], ["Goblin 1"], ["health potion"])
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
         if room.name == "test_room":
             return True
     except Exception as e:
         return e
 
+def spawn_enemies_unit_tests():
+    try:
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
+        room.spawn_enemies()
+        return True
+    except Exception as e:
+        return e
+
 def create_creature_unit_tests():
     try:
-        enemy: Monster = Monster("Goblin 1", 50, 5)
+        enemy: Monster = Monster("Goblin 1", 50, 5, 0)
         character: Character = Character("Beastman", 100, 10)
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
         if enemy.name == "Goblin 1" and character.name == "Beastman" and sorcerer.name == "Gandalf":
@@ -85,7 +93,7 @@ def use_potion_unit_tests():
 def attack_unit_tests():
     try:
         character: Character = Character("Beastman", 100, 10)
-        enemy: Monster = Monster("Goblin 1", 50, 5)
+        enemy: Monster = Monster("Goblin 1", 50, 5, 0)
         character.damage_target(enemy, character.attack)
         if enemy.current_health == 40:
             return True
@@ -94,7 +102,7 @@ def attack_unit_tests():
 
 def cast_spell_unit_tests():
     try:
-        enemy: Monster = Monster("Goblin 1", 50, 5)
+        enemy: Monster = Monster("Goblin 1", 50, 5, 0)
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
         sorcerer.cast_spell(enemy, 20)
         if enemy.current_health == 30 and sorcerer.current_mana == 80:
@@ -123,6 +131,16 @@ if passed == True:
 else:
     result = "FAILED"
 print(f"Room creation unit test: {result}")
+if passed != True:
+    print(f"Error: {passed}")
+
+## Enemy spawning tests
+passed = spawn_enemies_unit_tests()
+if passed == True:
+    result = "PASSED"
+else:
+    result = "FAILED"
+print(f"Enemy spawning unit test: {result}")
 if passed != True:
     print(f"Error: {passed}")
 

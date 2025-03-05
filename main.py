@@ -16,8 +16,12 @@ class Room:
         self.treasure = treasure
 
     def spawn_enemies(self):
+        instances = []
         for enemy in self.enemies:
-            pass
+            for i in range(self.enemies[enemy]):
+                instance = Monster(enemy, config.enemies[enemy]["health"], config.enemies[enemy]["attack"], i)
+                instances.append(instance)
+        return instances
 
     def search_room(self):
         print(self.search_results)
@@ -41,7 +45,9 @@ class Creature:
         return target.current_health
 
 class Monster(Creature):
-    pass
+    def __init__(self, name, health, attack, instance_id):
+        super().__init__(name, health, attack)
+        self.id = instance_id
 
 class Character(Creature):
     pass
@@ -144,3 +150,8 @@ class Game():
             print("Enemies appear!")
             room.spawn_enemies()
         
+
+# room: Room = Room("test_room", "This is a test room.", "You find a shiny coin.", ("North", "East", "South"), {"goblin": 5, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1}, {"gold": 1})
+# enemies = room.spawn_enemies()
+# for enemy in enemies:
+#     print(f"Instance ID: {enemy.id}, Name: {enemy.name}, Health: {enemy.health}, Attack: {enemy.attack}")
