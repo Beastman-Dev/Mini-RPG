@@ -6,7 +6,7 @@ import config
 
 def create_dungeon_unit_tests():
     try:
-        dungeon: Dungeon = Dungeon("Tomb of Minor Inconvenience", config.dungeon_rooms)
+        dungeon: Dungeon = Dungeon("Tomb of Minor Inconvenience", "A dim and depressing underground goblin lair.", config.dungeon_rooms)
         if dungeon.name == "Tomb of Minor Inconvenience":
             return True
     except Exception as e:

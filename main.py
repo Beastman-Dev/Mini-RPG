@@ -1,8 +1,9 @@
 import config
 
 class Dungeon:
-    def __init__(self, name, rooms):
+    def __init__(self, name, description, rooms):
         self.name = name
+        self.description = description
         self.rooms = rooms
 
 # Room properties = name, description, search_results, exits, enemies, treasure
