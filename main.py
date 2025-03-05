@@ -54,10 +54,14 @@ class Treasure:
         self.value = value
 
 class Weapon(Treasure):
-    pass
+    def __init__(self, name, description, value, damage):
+        super().__init__(name, description, value)
+        self.damage = damage
 
 class Armor(Treasure):
-    pass
+    def __init__(self, name, description, value, protection):
+        super().__init__(name, description, value)
+        self.protection = protection
 
 class Potion(Treasure):
     def __init__(self, name, description, value, potency):

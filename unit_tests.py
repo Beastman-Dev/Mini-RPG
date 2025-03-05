@@ -1,5 +1,5 @@
 # Import necessary modules
-from main import Dungeon, Room, Monster, Character, Sorcerer, Potion
+from main import *
 import config
 
 ## Unit Tests
@@ -26,6 +26,16 @@ def create_creature_unit_tests():
         character: Character = Character("Beastman", 100, 10)
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
         if enemy.name == "Goblin 1" and character.name == "Beastman" and sorcerer.name == "Gandalf":
+            return True
+    except Exception as e:
+        return e
+
+def create_treasure_unit_tests():
+    try:
+        amulet: Treasure = Treasure("amulet", "a shiny amulet", 10)
+        weapon: Weapon = Weapon("sword", "a sharp blade", 10, 5)
+        armor: Armor = Armor("shield", "a sturdy shield", 10, 5)
+        if amulet.name == "amulet" and weapon.name == "sword" and armor.name == "shield":
             return True
     except Exception as e:
         return e
@@ -123,6 +133,16 @@ if passed == True:
 else:
     result = "FAILED"
 print(f"Creature creation unit test: {result}")
+if passed != True:
+    print(f"Error: {passed}")
+
+## Treasure creation tests
+passed = create_treasure_unit_tests()
+if passed == True:
+    result = "PASSED"
+else:
+    result = "FAILED"
+print(f"Treasure creation unit test: {result}")
 if passed != True:
     print(f"Error: {passed}")
 
