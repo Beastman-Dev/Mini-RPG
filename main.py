@@ -30,7 +30,11 @@ class Room:
         pass
 
     def room_options(self):
-        pass
+        options = []
+        for i, exit in enumerate(self.exits):
+            options.append(f"{i+1}. Go {exit}")
+        options.append(f"{len(self.exits)+1}. Search room")
+        return options
 
 class Creature:
     def __init__(self, name, health, attack):
@@ -151,7 +155,23 @@ class Game():
             room.spawn_enemies()
         
 
+## Functional Testing
 # room: Room = Room("test_room", "This is a test room.", "You find a shiny coin.", ("North", "East", "South"), {"goblin": 5, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1}, {"gold": 1})
 # enemies = room.spawn_enemies()
 # for enemy in enemies:
 #     print(f"Instance ID: {enemy.id}, Name: {enemy.name}, Health: {enemy.health}, Attack: {enemy.attack}")
+# options = room.room_options()
+# for option in options:
+#     print(option)
+# choice = input(f"What do you do? ")
+# if choice == "1":
+#     print("You go North.")
+# elif choice == "2":
+#     print("You go East.")
+# elif choice == "3":
+#     print("You go South.")
+# elif choice == "4":
+#     room.search_room()
+# else:
+#     print("Invalid choice.")
+#     exit()

@@ -28,6 +28,15 @@ def spawn_enemies_unit_tests():
     except Exception as e:
         return e
 
+def room_options_unit_tests():
+    try:
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
+        options = room.room_options()
+        if options == ["1. Go north", "2. Search room"]:
+            return True
+    except Exception as e:
+        return e
+
 def create_creature_unit_tests():
     try:
         enemy: Monster = Monster("Goblin 1", 50, 5, 0)
@@ -141,6 +150,16 @@ if passed == True:
 else:
     result = "FAILED"
 print(f"Enemy spawning unit test: {result}")
+if passed != True:
+    print(f"Error: {passed}")
+
+## Room options tests
+passed = room_options_unit_tests()
+if passed == True:
+    result = "PASSED"
+else:
+    result = "FAILED"
+print(f"Room options unit test: {result}")
 if passed != True:
     print(f"Error: {passed}")
 
