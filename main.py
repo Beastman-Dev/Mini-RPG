@@ -60,9 +60,8 @@ class Armor(Treasure):
     pass
 
 class Potion(Treasure):
-    def __init__(self, type, value, potency):
-        self.type = type
-        self.value = value
+    def __init__(self, name, description, value, potency):
+        super().__init__(name, description, value)
         self.potency = potency
 
     def add_to_inventory(self):
@@ -70,7 +69,7 @@ class Potion(Treasure):
 
     def use_potion(self, imbiber):
         self.imbiber = imbiber
-        if self.type == "health":
+        if self.name == "health potion":
             if imbiber.current_health == imbiber.health:
                 print(f"{imbiber.name} is already at full health!")
                 return
@@ -78,7 +77,7 @@ class Potion(Treasure):
             imbiber.current_health += self.potency
             if imbiber.current_health > imbiber.health:
                 imbiber.current_health = imbiber.health
-        elif self.type == "mana":
+        elif self.name == "mana potion":
             if not isinstance(imbiber, Sorcerer):
                 print("Only sorcerers can use mana potions!")
                 return

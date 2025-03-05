@@ -32,9 +32,9 @@ def create_creature_unit_tests():
 
 def create_potion_unit_tests():
     try:
-        health_potion: Potion = Potion("health", 10, 10)
-        mana_potion: Potion = Potion("mana", 10, 10)
-        if health_potion.type == "health" and mana_potion.type == "mana":
+        health_potion: Potion = Potion("health potion", "small vial of red liquid", 10, 10)
+        mana_potion: Potion = Potion("mana potion", "small vial of blue liquid", 10, 10)
+        if health_potion.name == "health potion" and mana_potion.name == "mana potion":
             return True
     except Exception as e:
         return e
@@ -43,8 +43,8 @@ def use_potion_unit_tests():
     try:
         fighter: Character = Character("Beastman", 100, 10)
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
-        health_potion: Potion = Potion("health", 10, 10)
-        mana_potion: Potion = Potion("mana", 10, 10)
+        health_potion: Potion = Potion("health potion", "small vial of red liquid", 10, 10)
+        mana_potion: Potion = Potion("mana potion", "small vial of blue liquid", 10, 10)
         health_potion.use_potion(fighter)
         if fighter.current_health == 100:
             test_1 = True
