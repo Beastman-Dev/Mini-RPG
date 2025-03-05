@@ -125,6 +125,10 @@ class Potion(Treasure):
         else:
             print("Invalid potion type!")
 
+class Combat:
+    def __init__(self) -> None:
+        pass
+
 class Game():
     def __init__(self, dungeon: dict) -> None:
         self.dungeon = dungeon
