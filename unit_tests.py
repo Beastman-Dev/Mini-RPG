@@ -14,7 +14,7 @@ def create_dungeon_unit_tests():
 
 def create_room_unit_tests():
     try:
-        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", {"North": "room_0"}, {"goblin": 1}, ["health potion"])
         if room.name == "test_room":
             return True
     except Exception as e:
@@ -22,7 +22,7 @@ def create_room_unit_tests():
 
 def spawn_enemies_unit_tests():
     try:
-        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", {"North": "room_0"}, {"goblin": 1}, ["health potion"])
         room.spawn_enemies()
         return True
     except Exception as e:
@@ -30,9 +30,9 @@ def spawn_enemies_unit_tests():
 
 def room_options_unit_tests():
     try:
-        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", ["north"], {"goblin": 1}, ["health potion"])
+        room: Room = Room("test_room", "A small room with a single door.", "You find a health potion!", {"North": "room_0"}, {"goblin": 1}, ["health potion"])
         options = room.room_options()
-        if options == ["1. Go north", "2. Search room"]:
+        if options == ["1. Go North", "2. Search room"]:
             return True
     except Exception as e:
         return e
