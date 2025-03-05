@@ -6,7 +6,6 @@ class Dungeon:
         self.description = description
         self.rooms = rooms
 
-# Room properties = name, description, search_results, exits, enemies, treasure
 class Room:
     def __init__(self, name, description, search_results, exits, enemies, treasure):
         self.name = name
@@ -125,36 +124,26 @@ class Game():
 
     def start(self):
         print(f"Welcome to {self.dungeon.name}!")
-        print("You are standing in the Entrance Hall.")
-        print("To the North is the dungeon entrance.")
-        print("There are doors to the East and West.")
-        print("The hall is otherwise empty.")
-        print("You hear gutteral voices coming from the West and faint snoring from the East.")
-        print("What do you do?")
-        print("1. Go North")
-        print("2. Go East")
-        print("3. Go West")
-        print("4. Quit")
-        choice = input("> ")
-        if choice == "1":
-            print("You go North.")
-        elif choice == "2":
-            print("You go East.")
-        elif choice == "3":
-            print("You go West.")
-        elif choice == "4":
-            print("Goodbye!")
-            exit()
-        else:
-            print("Invalid choice.")
-            self.start()
+        print(self.dungeon.description)
+        self.enter_room(self.dungeon.rooms["room_1"])
 
     def enter_room(self, room):
-        print(room.description)
-        if room.enemies:
-            print("Enemies appear!")
-            room.spawn_enemies()
+        current_room: Room = Room(room["name"], room["description"], room["search_results"], room["exits"], room["enemies"], room["treasure"])
+        print(current_room.description)
+        if current_room.enemies:
+            print("You found enemies!")
+            for enemy in current_room.spawn_enemies():
+                print(f"Instance ID: {enemy.id}, Name: {enemy.name}, Health: {enemy.health}, Attack: {enemy.attack}")
+        else:
+            options = current_room.room_options()
+            for option in options:
+                print(option)
+            choice = input(f"What do you do? ")
+            return choice    
         
+dungeon = Dungeon(config.dungeon_name, config.dungeon_description, config.dungeon_rooms)
+game = Game(dungeon)
+game.start()
 
 ## Functional Testing
 # room: Room = Room("test_room", "This is a test room.", "You find a shiny coin.", ("North", "East", "South"), {"goblin": 5, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1}, {"gold": 1})
