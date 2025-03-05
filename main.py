@@ -136,7 +136,7 @@ class Game():
     def start(self) -> None:
         print(f"Welcome to {self.dungeon.name}!")
         print(self.dungeon.description)
-        self.enter_room(self.dungeon.rooms["room_1"])
+        self.enter_room(self.dungeon.rooms["room_4"])
 
     def enter_room(self, room: dict) -> None:
         current_room: Room = Room(room["name"], room["description"], room["search_results"], room["exits"], room["enemies"], room["treasure"])
@@ -154,9 +154,9 @@ class Game():
             choice = input(f"What do you do? ")
             return choice
         
-dungeon = Dungeon(config.dungeon_name, config.dungeon_description, config.dungeon_rooms)
-game = Game(dungeon)
-game.start()
+# dungeon = Dungeon(config.dungeon_name, config.dungeon_description, config.dungeon_rooms)
+# game = Game(dungeon)
+# game.start()
 
 ## Functional Testing
 # room: Room = Room("test_room", "This is a test room.", "You find a shiny coin.", ("North", "East", "South"), {"goblin": 5, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1}, {"gold": 1})
