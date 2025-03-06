@@ -126,8 +126,16 @@ class Potion(Treasure):
             print("Invalid potion type!")
 
 class Combat:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, attacker: dict, defender: dict) -> None:
+        self.attacker = attacker
+        self.defender = defender
+
+    def attack(self) -> None:
+        self.attacker.damage_target(self.defender, self.attacker.attack)
+
+    def cast_spell(self, spell_power: int) -> None:
+        self.attacker.cast_spell(self.defender, spell_power)
+
 
 class Game():
     def __init__(self, dungeon: dict) -> None:
