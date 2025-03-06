@@ -138,7 +138,7 @@ def remove_from_inventory_unit_tests():
     except Exception as e:
         return e
 
-def use_potion_unit_tests():
+def use_item_unit_tests():
     try:
         fighter: Character = Character("Beastman", 100, 10)
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
@@ -173,6 +173,8 @@ def use_potion_unit_tests():
     except FullManaError as e:
         return True
     except NotSorcererError as e:
+        return True
+    except ValueError as e:
         return True
     except Exception as e:
         return e
@@ -240,13 +242,31 @@ def player_combat_options_unit_tests():
         enemy: Monster = Monster("Goblin 1", 50, 5, 0)
         combat: Combat = Combat(character, enemy)
         options = combat.player_combat_options()
-        if options == ["1. Use potion", "2. Attack"]:
+        if options == ["1. Attack", "2. Use healing potion"]:
+            return True
+    except Exception as e:
+        return e
+
+def target_options_unit_tests():
+    try:
+        character: Character = Character("Beastman", 100, 10)
+        enemy: Monster = Monster("Goblin 1", 50, 5, 0)
+        combat: Combat = Combat(character, enemy)
+        options = combat.target_options()
+        if options == ["1. Goblin 1"]:
             return True
     except Exception as e:
         return e
 
 def combat_loop_unit_tests():
-    pass
+    try:
+        character: Character = Character("Beastman", 100, 10)
+        enemy: Monster = Monster("Goblin 1", 50, 5, 0)
+        combat: Combat = Combat(character, enemy)
+        combat.combat_loop()
+        return True
+    except Exception as e:
+        return e
 
 def attack_unit_tests():
     try:
@@ -390,7 +410,7 @@ if passed != True:
     print(f"Error: {passed}")
 
 ## Potion use tests
-passed = use_potion_unit_tests()
+passed = use_item_unit_tests()
 if passed == True:
     result = "PASSED"
 else:
@@ -470,14 +490,24 @@ print(f"Combat options unit test: {result}")
 if passed != True:
     print(f"Error: {passed}")
 
+## Target options tests
+passed = target_options_unit_tests()
+if passed == True:
+    result = "PASSED"
+else:
+    result = "FAILED"
+print(f"Target options unit test: {result}")
+if passed != True:
+    print(f"Error: {passed}")
+
 ## Combat loop tests
-#passed = combat_loop_unit_tests()
-#if passed == True:
+# passed = combat_loop_unit_tests()
+# if passed == True:
 #    result = "PASSED"
-#else:
+# else:
 #    result = "FAILED"
-#print(f"Combat loop unit test: {result}")
-#if passed != True:
+# print(f"Combat loop unit test: {result}")
+# if passed != True:
 #    print(f"Error: {passed}")
 
 ## Attack tests

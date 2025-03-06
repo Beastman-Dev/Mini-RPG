@@ -19,7 +19,7 @@ class Room:
         instances = []
         for enemy in self.enemies:
             for i in range(self.enemies[enemy]):
-                instance = Monster(enemy, config.enemies[enemy]["health"], config.enemies[enemy]["attack"], i)
+                instance = Monster(enemy, config.enemies[enemy]["health"], config.enemies[enemy]["attack"], i + 1)
                 instances.append(instance)
         return instances
 
@@ -92,6 +92,9 @@ class Character(Creature):
 
     def use_item(self, item: dict) -> None:
         self.item = item
+        if item.name not in self.inventory:
+            raise ValueError("Item not in inventory!")
+        self.remove_from_inventory(item)
         if item.name == "health potion":
             if self.current_health == self.health:
                 raise FullHealthError(f"{self.name} is already at full health!")
@@ -151,11 +154,21 @@ class Combat:
 
     def player_combat_options(self) -> list:
         options = []
-        options.append("1. Use potion")
-        options.append("2. Attack")
+        options.append("1. Attack")
+        options.append("2. Use healing potion")
         if isinstance(self.player, Sorcerer):
             options.append("3. Cast spell")
+            options.appent("4. Use mana potion")
         return options
+
+    def target_options(self) -> list:
+        pass
+
+    def attack(self, attacker, defender) -> None:
+        attacker.damage_target(defender, attacker.attack)
+
+    def cast_spell(self, spell_power: int) -> None:
+        self.attacker.cast_spell(self.defender, spell_power)
 
     def combat_loop(self) -> None:
         while True:
@@ -164,41 +177,33 @@ class Combat:
                 print(option)
             choice = input("What do you do? ")
             if choice == "1":
-                potion_choice = input("Which potion do you use? ")
-                if potion_choice == "1":
-                    self.player.use_potion(self.player)
-                elif potion_choice == "2":
-                    self.player.use_potion(self.player)
-                else:
-                    print("Invalid potion choice.")
-            elif choice == "2":
+                target_options = [] #self.target_options()
+                for option in target_options:
+                    print(option)
                 target_choice = input("Which enemy do you attack? ")
                 self.attack(self.player, self.enemies[int(target_choice) - 1])
+            elif choice == "2":
+                self.player.use_item("health potion")
             elif choice == "3":
                 spell_power = input("How much power do you put into the spell? ")
                 self.cast_spell(int(spell_power))
+            elif choice == "4":
+                self.player.use_item("mana potion")
             else:
-                print("Invalid choice)")
+                print("Invalid choice")
 
+            # Enemy turn
+            for enemy in self.enemies:
+                if enemy.current_health > 0:
+                    self.attack(enemy, self.player)
+
+            # Check for win/loss conditions
             if self.player.current_health <= 0:
                 print("You have died!")
                 break
             if all(enemy.current_health <= 0 for enemy in self.enemies):
                 print("You have defeated all enemies!")
                 break
-            for enemy in self.enemies:
-                if enemy.current_health > 0:
-                    self.attack(self.player, enemy)
-            for enemy in self.enemies:
-                if enemy.current_health > 0:
-                    self.attack(enemy, self.player)
-
-    def attack(self, attacker, defender) -> None:
-        attacker.damage_target(defender, attacker.attack)
-
-    def cast_spell(self, spell_power: int) -> None:
-        self.attacker.cast_spell(self.defender, spell_power)
-
 
 class Game():
     def __init__(self, dungeon: dict) -> None:
@@ -207,17 +212,21 @@ class Game():
     def start(self) -> None:
         print(f"Welcome to {self.dungeon.name}!")
         print(self.dungeon.description)
-        self.enter_room(self.dungeon.rooms["room_4"])
+        self.enter_room(self.dungeon.rooms["room_6"])
 
     def enter_room(self, room: dict) -> None:
         current_room: Room = Room(room["name"], room["description"], room["search_results"], room["exits"], room["enemies"], room["treasure"])
         print(current_room.description)
         if current_room.enemies:
             print("You found enemies!")
+            current_enemies = []
             enemy_number = 1
             for enemy in current_room.spawn_enemies():
-                print(f"{enemy_number}. {enemy.name}")
+                print(f"{enemy_number}. {enemy.name} {enemy.id} ({enemy.health} HP, {enemy.attack} ATK)")
+                current_enemies.append(enemy)
                 enemy_number += 1
+            current_target = input("Choose target: ")
+            print(current_enemies[int(current_target) - 1].name)
         else:
             options = current_room.room_options()
             for option in options:
@@ -225,9 +234,9 @@ class Game():
             choice = input(f"What do you do? ")
             return choice
         
-# dungeon = Dungeon(config.dungeon_name, config.dungeon_description, config.dungeon_rooms)
-# game = Game(dungeon)
-# game.start()
+dungeon = Dungeon(config.dungeon_name, config.dungeon_description, config.dungeon_rooms)
+game = Game(dungeon)
+game.start()
 
 ## Functional Testing
 # room: Room = Room("test_room", "This is a test room.", "You find a shiny coin.", ("North", "East", "South"), {"goblin": 5, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1}, {"gold": 1})

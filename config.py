@@ -44,10 +44,10 @@ dungeon_rooms = {
     },
     "room_6": {
     "name": "Throne Room",
-    "description": "This is a large room with four pillars in the middle and a raised dais on the South side. The only entrance is the double doors you entered through. On the dais sits a rickety throne decorated with bones, an ugly statue of a goblin, and a large wodden chest. A fat goblin sits on the throne, a garishly decorated crown on his head. His clothing is of finer material than the others but tattered, poorly sewn rips in several places. Three other goblins stand near the throne. Standing to the king's right is a large, muscular goblin wearing leather armor and carrying a spiked club. To his left stands a slim, older-looking goblin with an ornate staff and wearing robes. Kneeling at the base of the steps to the dais is a female goblin wearing a dress.",
+    "description": "This is a large room with four pillars in the middle and a raised dais on the South side. The only entrance is the double doors you entered through. On the dais sits a rickety throne decorated with bones, an ugly statue of a goblin, and a large wodden chest. A fat goblin sits on the throne, a garishly decorated crown on his head. His clothing is of finer material than the others but tattered, poorly sewn rips in several places. Three other goblins stand near the throne. Standing to the king's right is a large, muscular goblin wearing leather armor and carrying a spiked club. To his left stands a slim, older-looking goblin with an ornate staff and wearing robes. Several other goblins stand around, chittering to one another in their strange tongue.",
     "search_results": "The chest contains 61 gold.",
     "exits": {"North": "room_5"},
-    "enemies": {"goblin": 1, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1},
+    "enemies": {"goblin": 3, "goblin king": 1, "goblin champion": 1, "goblin shaman": 1},
     "treasure": {"gold": 61}
     }
 }
