@@ -40,6 +40,15 @@ class Room:
         options.append(f"{len(self.exits) + 1}. Search room")
         return options
 
+class FullHealthError(Exception):
+    pass
+
+class FullManaError(Exception):
+    pass
+
+class NotSorcererError(Exception):
+    pass
+
 class Creature:
     def __init__(self, name: str, health: int, attack: int) -> None:
         self.name = name
@@ -85,22 +94,22 @@ class Character(Creature):
         self.item = item
         if item.name == "health potion":
             if self.current_health == self.health:
-                raise Exception(f"{self.name} is already at full health!")
+                raise FullHealthError(f"{self.name} is already at full health!")
             self.current_health += item.potency
             if self.current_health > self.health:
                 self.current_health = self.health
         elif item.name == "mana potion":
             if not isinstance(self, Sorcerer):
-                raise Exception("Only sorcerers can use mana potions!")
+                raise NotSorcererError("Only sorcerers can use mana potions!")
             if self.current_mana == self.mana:
-                raise Exception(f"{self.name} is already at full mana!")
+                raise FullManaError(f"{self.name} is already at full mana!")
             self.current_mana += item.potency
             if self.current_mana > self.mana:
                 self.current_mana = self.mana
         else:
             raise Exception("Invalid item!")
 
-class Sorcerer(Creature):
+class Sorcerer(Character):
     def __init__(self, name: str, health: int, attack: int, mana: int) -> None:
         super().__init__(name, health, attack)
         self.mana = mana

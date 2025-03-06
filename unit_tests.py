@@ -72,30 +72,36 @@ def use_potion_unit_tests():
         sorcerer: Sorcerer = Sorcerer("Gandalf", 100, 10, 100)
         health_potion: Potion = Potion("health potion", "small vial of red liquid", 10, 10)
         mana_potion: Potion = Potion("mana potion", "small vial of blue liquid", 10, 10)
-        health_potion.use_potion(fighter)
+        fighter.use_item(health_potion)
         if fighter.current_health == 100:
             test_1 = True
         else:
             test_1 = False
-        mana_potion.use_potion(sorcerer)
+        sorcerer.use_item(mana_potion)
         if sorcerer.current_mana == 100:
             test_2 = True
         else:
             test_2 = False
         fighter.current_health = 80
         sorcerer.current_mana = 80
-        health_potion.use_potion(fighter)
+        fighter.use_item(health_potion)
         if fighter.current_health == 90:
             test_3 = True
         else:
             test_3 = False
-        mana_potion.use_potion(sorcerer)
+        sorcerer.use_item(mana_potion)
         if sorcerer.current_mana == 90:
             test_4 = True
         else:
             test_4 = False
         if test_1 == True and test_2 == True and test_3 == True and test_4 == True:
             return True
+    except FullHealthError as e:
+        return True
+    except FullManaError as e:
+        return True
+    except NotSorcererError as e:
+        return True
     except Exception as e:
         return e
 
